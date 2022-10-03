@@ -5,5 +5,12 @@ import { methods as controltareasController } from "./../controllers/controltare
 const router = Router();
 
 router.get("/", controltareasController.obtenerTareas);
+router.get("/:id", controltareasController.obtenerTarea);
+router.put("/finalizar/:id", controltareasController.finalizarTarea);
+router.post("/", controltareasController.crearTarea);
+router.put("/:id", controltareasController.modificarTarea);
+
+
+
 
 export default router;
