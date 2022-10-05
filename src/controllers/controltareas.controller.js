@@ -70,7 +70,7 @@ const finalizarTarea = async (req, res) => {
     try {
         const { id } = req.params;
         const connection = await getConnection();
-        const result = await connection.query(`CALL SP_finalizar_tarea(?)`, id);
+        const result = await connection.query(`CALL SP_finalizar_tarea_2(?)`, id);
         res.json(result);
     } catch (error) {
         res.status(500);
