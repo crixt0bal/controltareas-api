@@ -14,5 +14,6 @@ app.use(express.json());
 
 // Routes
 app.use("/api/tareas", controltareasRoutes);
+app.use("/api/empresas", controltareasRoutes);
 
 export default app;

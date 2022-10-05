@@ -28,7 +28,9 @@ const obtenerTarea = async (req, res) => {
 
 const crearTarea = async (req, res) => {
     try {
-        const { descripcion, inicio, termino, repetible, activo, estado, creador, tarea_anterior, nombre, Proceso_idProceso } = req.body;
+        const { descripcion, inicio,
+             termino, repetible, activo, estado, 
+             creador, tarea_anterior, nombre, Proceso_idProceso } = req.body;
 
         if (descripcion === undefined || nombre === undefined) {
             res.status(400).json({ message: "Bad Request. Please fill all field." });
@@ -43,8 +45,6 @@ const crearTarea = async (req, res) => {
         res.send(error.message);
     }
 };
-
-
 const modificarTarea = async (req, res) => {
     try {
         const { id } = req.params;
@@ -63,9 +63,6 @@ const modificarTarea = async (req, res) => {
         res.send(error.message);
     }
 };
-
-
-
 const finalizarTarea = async (req, res) => {
     try {
         const { id } = req.params;
@@ -78,11 +75,53 @@ const finalizarTarea = async (req, res) => {
     }
 };
 
+const obtenerEmpresas = async (req, res) => {
+    try {
+        const connection = await getConnection();
+        const sp = `CALL SP_listar_todas_empresas()`
+        const result = await connection.query(sp);
+        res.json(result);
+    } catch (error) {
+        res.status(500);
+        res.send(error.message);
+    }
+};
+const obtenerEmpresa = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const connection = await getConnection();
+        const result = await connection.query(`CALL SP_listar_una_empresa(?)`, id);
+        res.json(result);
+    } catch (error) {
+        res.status(500);
+        res.send(error.message);
+    }
+};
+const crearEmpresa = async(req, res) => {
+    try{
+        const {nombre_empresa} = req.body;
+
+        if (nombre_empresa === undefined ) {
+            res.status(400).json({ message: "Bad Request. Please fill all field." });
+        }
+
+        const empresa = {nombre_empresa};
+        const connection = await getConnection();
+        const result = await connection.query(`CALL SP_crear_empresa(?)`,[empresa.nombre_empresa]);
+        res.json({message: "Empresa añadida"});
+    }catch(error){
+        res.status(500);
+        res.send(error.message);
+    }
+
+};
+
 export const methods = {
     obtenerTareas,
     obtenerTarea,
     crearTarea,
     finalizarTarea,
-    modificarTarea
+    modificarTarea,
+    crearEmpresa
 
 };
