@@ -9,8 +9,8 @@ router.get("/:id", controltareasController.obtenerTarea);
 router.put("/finalizar/:id", controltareasController.finalizarTarea);
 router.post("/", controltareasController.crearTarea);
 router.put("/:id", controltareasController.modificarTarea);
-router.get("/", controltareasController.obtenerEmpresas);
-router.get("/:id", controltareasController.obtenerEmpresa);
+router.get("/empresas", controltareasController.obtenerEmpresas);
+router.get("/empresas/:id", controltareasController.obtenerEmpresa);
 router.post("/", controltareasController.crearEmpresa);
 
 
