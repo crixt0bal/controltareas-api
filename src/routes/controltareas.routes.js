@@ -15,6 +15,7 @@ router.put("/:id", controltareasController.modificarTarea);
 router.get("/porcentaje/:id", controltareasController.obtenerPorcentaje);
 router.put("/aceptartarea/:id", controltareasController.aceptarTarea);
 router.put("/rechazartarea/:id", controltareasController.rechazarTarea);
+router.get("/tareasempleado/:id_empleado", controltareasController.tareasEmpleado);
 //Empresa
 router.get("/empresas/:id", empresaController.obtenerEmpresa);
 router.post("/empresa", empresaController.crearEmpresa);

@@ -136,6 +136,20 @@ const obtenerPorcentaje = async (req, res) => {
 };
 
 
+const tareasEmpleado = async (req, res) => {
+    try {
+        const { id_empleado } = req.params;
+
+        const connection = await getConnection();
+        const result = await connection.query(`CALL SP_tareas_empleado(?)`, id_empleado);
+        res.json(result);
+    } catch (error) {
+        res.status(500);
+        res.send(error.message);
+    }
+};
+
+
 
 
 
@@ -147,7 +161,8 @@ export const methods = {
     modificarTarea,
     obtenerPorcentaje,
     aceptarTarea,
-    rechazarTarea
+    rechazarTarea,
+    tareasEmpleado
     
 
 };
