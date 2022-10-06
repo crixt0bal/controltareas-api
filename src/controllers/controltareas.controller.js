@@ -75,6 +75,25 @@ const finalizarTarea = async (req, res) => {
     }
 };
 
+const aceptarTarea = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { id_tarea,id_empleado} = req.body;
+
+        // if (id_tarea === undefined || id_empleado === undefined ) {
+        //     res.status(400).json({ message: "Bad Request. Please fill all field." });
+        // }
+
+        const aceptartarea = {id_tarea,id_empleado};
+        const connection = await getConnection();
+        const result = await connection.query(`CALL SP_aceptar_tarea(?, ?)`, [id, aceptartarea.id_tarea, aceptartarea.id_empleado]);
+        res.json(result);
+    } catch (error) {
+        res.status(500);
+        res.send(error.message);
+    }
+};
+
 const crearEmpresa = async(req, res) => {
     try{
         const {nombre_empresa} = req.body;
@@ -139,6 +158,8 @@ const obtenerPorcentaje = async (req, res) => {
 
 
 
+
+
 export const methods = {
     obtenerTareas,
     obtenerTarea,
@@ -148,7 +169,8 @@ export const methods = {
     crearEmpresa,
     obtenerEmpresa,
     crearUnidadInterna,
-    obtenerPorcentaje
+    obtenerPorcentaje,
+    aceptarTarea
     
 
 };

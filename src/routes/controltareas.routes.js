@@ -13,6 +13,7 @@ router.get("/empresas/:id", controltareasController.obtenerEmpresa);
 router.post("/Empresa", controltareasController.crearEmpresa);
 router.post("/UnidadInterna", controltareasController.crearUnidadInterna);
 router.get("/porcentaje/:id", controltareasController.obtenerPorcentaje);
+router.put("/aceptartarea/:id", controltareasController.aceptarTarea);
 
 
 
