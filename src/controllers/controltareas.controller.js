@@ -66,8 +66,15 @@ const modificarTarea = async (req, res) => {
 const finalizarTarea = async (req, res) => {
     try {
         const { id } = req.params;
+        const { id_tarea } = req.body;
+
+        // if (id === undefined || descripcion === undefined || nombre === undefined) {
+        //     res.status(400).json({ message: "Bad Request. Please fill all field." });
+        // }
+
+        const tarea = {id_tarea };
         const connection = await getConnection();
-        const result = await connection.query(`CALL SP_finalizar_tarea_2(?)`, id);
+        const result = await connection.query(`CALL SP_finalizar_tarea(?, ?)`, [id, tarea.id_tarea]);
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -78,15 +85,15 @@ const finalizarTarea = async (req, res) => {
 const aceptarTarea = async (req, res) => {
     try {
         const { id } = req.params;
-        const { id_tarea,id_empleado} = req.body;
+        const { id_tarea, id_empleado } = req.body;
 
-        // if (id_tarea === undefined || id_empleado === undefined ) {
+        // if (id === undefined || descripcion === undefined || nombre === undefined) {
         //     res.status(400).json({ message: "Bad Request. Please fill all field." });
         // }
 
-        const aceptartarea = {id_tarea,id_empleado};
+        const tarea = {id_tarea, id_empleado };
         const connection = await getConnection();
-        const result = await connection.query(`CALL SP_aceptar_tarea(?, ?)`, [id, aceptartarea.id_tarea, aceptartarea.id_empleado]);
+        const result = await connection.query(`CALL SP_aceptar_tarea(?, ?, ?)`, [id, tarea.id_tarea, tarea.id_empleado]);
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -94,31 +101,18 @@ const aceptarTarea = async (req, res) => {
     }
 };
 
-const crearEmpresa = async(req, res) => {
-    try{
-        const {nombre_empresa} = req.body;
-
-        if (nombre_empresa === undefined ) {
-            res.status(400).json({ message: "Bad Request. Please fill all field." });
-        }
-
-        const empresa = {nombre_empresa};
-        const connection = await getConnection();
-        const result = await connection.query(`CALL SP_crear_empresa(?)`,[empresa.nombre_empresa]);
-        res.json({message: "Empresa añadida"});
-    }catch(error){
-        res.status(500);
-        res.send(error.message);
-    }
-
-};
-
-
-const obtenerEmpresa = async (req, res) => {
+const rechazarTarea = async (req, res) => {
     try {
         const { id } = req.params;
+        const { id_tarea, id_empleado } = req.body;
+
+        // if (id === undefined || descripcion === undefined || nombre === undefined) {
+        //     res.status(400).json({ message: "Bad Request. Please fill all field." });
+        // }
+
+        const tarea = {id_tarea, id_empleado };
         const connection = await getConnection();
-        const result = await connection.query(`CALL SP_listar_una_empresa(?)`, id);
+        const result = await connection.query(`CALL SP_rechazar_tarea(?, ?, ?)`, [id, tarea.id_tarea, tarea.id_empleado]);
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -126,23 +120,8 @@ const obtenerEmpresa = async (req, res) => {
     }
 };
 
-const crearUnidadInterna = async (req, res) => {
-    try {
-        const { descripcion, id_empresa} = req.body;
 
-        if (descripcion === undefined ) {
-            res.status(400).json({ message: "Bad Request. Please fill all field." });
-        }
 
-        const unidadinterna = { descripcion, id_empresa };
-        const connection = await getConnection();
-        const result = await connection.query('CALL SP_crear_unidad_interna(?, ?)', [unidadinterna.descripcion, unidadinterna.id_empresa]);
-        res.json({ message: "Unidad Interna añadida" });
-    } catch (error) {
-        res.status(500);
-        res.send(error.message);
-    }
-};
 
 const obtenerPorcentaje = async (req, res) => {
     try {
@@ -166,11 +145,9 @@ export const methods = {
     crearTarea,
     finalizarTarea,
     modificarTarea,
-    crearEmpresa,
-    obtenerEmpresa,
-    crearUnidadInterna,
     obtenerPorcentaje,
-    aceptarTarea
+    aceptarTarea,
+    rechazarTarea
     
 
 };
