@@ -2,6 +2,7 @@ import { Router } from "express";
 import { methods as controltareasController } from "./../controllers/controltareas.controller";
 import { methods as empresaController } from "./../controllers/empresa.controller";
 import { methods as unidadinternaController } from "./../controllers/unidadinterna.controller";
+import { methods as empleadoController } from "../controllers/empleado.controller";
 
 
 const router = Router();
@@ -21,6 +22,11 @@ router.get("/empresas/:id", empresaController.obtenerEmpresa);
 router.post("/empresa", empresaController.crearEmpresa);
 //Unidad Interna
 router.post("/unidadInterna", unidadinternaController.crearUnidadInterna);
+
+//Empleado
+router.post("/empleado", empleadoController.crearEmpleado);
+router.get("/empleados/:id", empleadoController.obtenerEmpleado);
+
 
 
 

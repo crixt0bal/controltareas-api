@@ -153,6 +153,7 @@ const tareasEmpleado = async (req, res) => {
 
 
 
+
 export const methods = {
     obtenerTareas,
     obtenerTarea,
@@ -162,7 +163,8 @@ export const methods = {
     obtenerPorcentaje,
     aceptarTarea,
     rechazarTarea,
-    tareasEmpleado
+    tareasEmpleado,
+
     
 
 };
