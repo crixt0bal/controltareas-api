@@ -1,23 +1,9 @@
 import { getConnection } from "./../database/database";
 
-const crearEmpleado = async (req, res) => {
+const obtenerEmpleados = async (req, res) => {
     try {
-        const { rut, nombres,
-             apellidos, correo_electronico, usuario, contrasena, 
-             activo, cargo_empleado, id_empresa, id_unida } = req.body;
-
-        if (descripcion === undefined || nombre === undefined) {
-            res.status(400).json({ message: "Bad Request. Please fill all field." });
-        }
-
-        const empleado = { rut, nombres,
-            apellidos, correo_electronico, usuario, contrasena, 
-            activo, cargo_empleado, id_empresa, id_unida };
         const connection = await getConnection();
-        const result = await connection.query('CALL SP_empleado_password_hashing(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [empleado.rut,
-             empleado.nombres, empleado.apellidos, empleado.correo_electronico, empleado.usuario, empleado.contrasena,
-              empleado.activo, empleado.cargo_empleado, empleado.id_empresa, empleado.id_unida]);
-        res.json({ message: "Empleado añadido" });
+        const result = await connection.query(`CALL SP_listar_todos_empleados()`);
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -29,7 +15,7 @@ const obtenerEmpleado = async (req, res) => {
     try {
         const { id } = req.params;
         const connection = await getConnection();
-        const result = await connection.query(`CALL SP_LISTAR_EMPLEADO(?)`, id);
+        const result = await connection.query(`CALL SP_listar_un_empleado(?)`, id);
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -37,7 +23,46 @@ const obtenerEmpleado = async (req, res) => {
     }
 };
 
+
+
+const crearEmpleado = async (req, res) => {
+    try {
+        const { rut, nombres,
+             apellidos, correo_electronico, usuario, contrasena, 
+             activo, cargo_empleado, id_empresa, id_unida } = req.body;
+
+        // if (rut === undefined || nombres === undefined) {
+        //     res.status(400).json({ message: "Bad Request. Please fill all field." });
+        // }
+
+        const empleado = { rut, nombres, apellidos, correo_electronico, usuario, contrasena, activo, cargo_empleado, id_empresa, id_unida };
+        const connection = await getConnection();
+        const result = await connection.query(`SP_crear_empleado_password_hashing(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [empleado.rut, empleado.nombres, empleado.apellidos, empleado.correo_electronico, empleado.usuario, empleado.contrasena, empleado.activo, empleado.cargo_empleado, empleado.id_empresa, empleado.id_unida]);
+        res.json({ message: "Empleado agregado" });
+    } catch (error) {
+        res.status(500);
+        res.send(error.message);
+    }
+};
+
+const login = async (req, res) => {
+    try {
+        const { usuario, contrasena } = req.body;
+
+        const user = {usuario, contrasena};
+        const connection = await getConnection();
+        const result = await connection.query(`CALL SP_Login(?, ?)`, user.usuario, user.contrasena);
+        res.json(result);
+    } catch (error) {
+        res.status(500);
+        res.send(error.message);
+    }
+};
+
+
 export const methods = {
     crearEmpleado,
-    obtenerEmpleado
+    obtenerEmpleado,
+    obtenerEmpleados,
+    login
 }
