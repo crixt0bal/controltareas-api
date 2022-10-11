@@ -32,9 +32,6 @@ const crearTarea = async (req, res) => {
              termino, repetible, activo, estado, 
              creador, tarea_anterior, nombre, Proceso_idProceso } = req.body;
 
-        if (descripcion === undefined || nombre === undefined) {
-            res.status(400).json({ message: "Bad Request. Please fill all field." });
-        }
 
         const tarea = { descripcion, inicio, termino, repetible, activo, estado, creador, tarea_anterior, nombre, Proceso_idProceso };
         const connection = await getConnection();
@@ -50,9 +47,6 @@ const modificarTarea = async (req, res) => {
         const { id } = req.params;
         const { descripcion, inicio, termino, repetible, activo, estado, creador, tarea_anterior, nombre, Proceso_idProceso } = req.body;
 
-        if (id === undefined || descripcion === undefined || nombre === undefined) {
-            res.status(400).json({ message: "Bad Request. Please fill all field." });
-        }
 
         const tarea = {descripcion, inicio, termino, repetible, activo, estado, creador, tarea_anterior, nombre, Proceso_idProceso };
         const connection = await getConnection();

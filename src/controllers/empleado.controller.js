@@ -27,6 +27,7 @@ const obtenerEmpleado = async (req, res) => {
 
 const crearEmpleado = async (req, res) => {
     try {
+
         const { rut, nombres,
              apellidos, correo_electronico, usuario, contrasena, 
              activo, cargo_empleado, id_empresa, id_unida } = req.body;
@@ -37,7 +38,7 @@ const crearEmpleado = async (req, res) => {
 
         const empleado = { rut, nombres, apellidos, correo_electronico, usuario, contrasena, activo, cargo_empleado, id_empresa, id_unida };
         const connection = await getConnection();
-        const result = await connection.query(`SP_crear_empleado_password_hashing(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [empleado.rut, empleado.nombres, empleado.apellidos, empleado.correo_electronico, empleado.usuario, empleado.contrasena, empleado.activo, empleado.cargo_empleado, empleado.id_empresa, empleado.id_unida]);
+        const result = await connection.query(`SP_crear_empleado(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [empleado.rut, empleado.nombres, empleado.apellidos, empleado.correo_electronico, empleado.usuario, empleado.contrasena, empleado.activo, empleado.cargo_empleado, empleado.id_empresa, empleado.id_unida]);
         res.json({ message: "Empleado agregado" });
     } catch (error) {
         res.status(500);
