@@ -13,9 +13,9 @@ const obtenerEmpleados = async (req, res) => {
 
 const obtenerEmpleado = async (req, res) => {
     try {
-        const { id_empleado } = req.params;
+        const { id } = req.params;
         const connection = await getConnection();
-        const result = await connection.query(`CALL SP_listar_un_empleado(?)`, id_empleado);
+        const result = await connection.query(`CALL SP_listar_un_empleado(?)`, id);
         res.json(result);
     } catch (error) {
         res.status(500);
