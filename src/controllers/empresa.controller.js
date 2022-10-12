@@ -21,6 +21,17 @@ const crearEmpresa = async(req, res) => {
 
 };
 
+const obtenerEmpresas = async (req, res) => {
+    try {
+        const connection = await getConnection();
+        const result = await connection.query(`CALL SP_listar_empresas()`);
+        res.json(result);
+    } catch (error) {
+        res.status(500);
+        res.send(error.message);
+    }
+};
+
 
 const obtenerEmpresa = async (req, res) => {
     try {
@@ -38,5 +49,6 @@ const obtenerEmpresa = async (req, res) => {
 export const methods = {
     crearEmpresa,
     obtenerEmpresa,
+    obtenerEmpresas
     
 };

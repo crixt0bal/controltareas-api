@@ -4,6 +4,7 @@ import { methods as empresaController } from "./../controllers/empresa.controlle
 const router = Router();
 
 //Empresa
+router.get("/", empresaController.obtenerEmpresas);
 router.get("/:id", empresaController.obtenerEmpresa);
 router.post("/", empresaController.crearEmpresa);
 
