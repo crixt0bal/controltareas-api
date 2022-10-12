@@ -7,7 +7,7 @@ const obtenerTareas = async (req, res) => {
         const connection = await getConnection();
         const sp = `CALL SP_listar_todas_tareas()`
         const result = await connection.query(sp);
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -19,7 +19,7 @@ const obtenerTarea = async (req, res) => {
         const { id } = req.params;
         const connection = await getConnection();
         const result = await connection.query(`CALL SP_listar_una_tarea(?)`, id);
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
         res.send(error.message);
