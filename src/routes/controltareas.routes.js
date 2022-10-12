@@ -10,7 +10,7 @@ const router = Router();
 //Tarea
 router.get("/", controltareasController.obtenerTareas);
 router.get("/:id", controltareasController.obtenerTarea);
-router.put("/finalizar/:id", controltareasController.finalizarTarea);
+router.put("/finalizartarea/:id", controltareasController.finalizarTarea);
 router.post("/", validateCreateAndUpdate, controltareasController.crearTarea);
 router.put("/:id", controltareasController.modificarTarea);
 router.get("/porcentaje/:id", controltareasController.obtenerPorcentaje);
