@@ -27,7 +27,12 @@ const obtenerEmpleado = async (req, res) => {
 
 const crearEmpleado = async (req, res) => {
     try {
+<<<<<<< HEAD
         const { id_empleado,rut, nombres,
+=======
+
+        const { rut, nombres,
+>>>>>>> ff833942921d5e85c852f7845915c496466fa6f7
              apellidos, correo_electronico, usuario, contrasena, 
              activo, cargo_empleado, id_empresa, id_unida } = req.body;
 
@@ -37,7 +42,11 @@ const crearEmpleado = async (req, res) => {
 
         const empleado = { id_empleado,rut, nombres, apellidos, correo_electronico, usuario, contrasena, activo, cargo_empleado, id_empresa, id_unida };
         const connection = await getConnection();
+<<<<<<< HEAD
         const result = await connection.query(`SP_crear_empleado(?,?,?,?,?,?,?,?,?,?,?)`, [empleado.id_empleado , empleado.rut, empleado.nombres, empleado.apellidos, empleado.correo_electronico, empleado.usuario, empleado.contrasena, empleado.activo, empleado.cargo_empleado, empleado.id_empresa, empleado.id_unida]);
+=======
+        const result = await connection.query(`SP_crear_empleado(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [empleado.rut, empleado.nombres, empleado.apellidos, empleado.correo_electronico, empleado.usuario, empleado.contrasena, empleado.activo, empleado.cargo_empleado, empleado.id_empresa, empleado.id_unida]);
+>>>>>>> ff833942921d5e85c852f7845915c496466fa6f7
         res.json({ message: "Empleado agregado" });
     } catch (error) {
         res.status(500);
