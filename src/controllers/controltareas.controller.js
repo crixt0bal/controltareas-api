@@ -7,7 +7,7 @@ const obtenerTareas = async (req, res) => {
         const connection = await getConnection();
         const sp = `CALL SP_listar_todas_tareas()`
         const result = await connection.query(sp);
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -19,7 +19,7 @@ const obtenerTarea = async (req, res) => {
         const { id } = req.params;
         const connection = await getConnection();
         const result = await connection.query(`CALL SP_listar_una_tarea(?)`, id);
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -60,15 +60,15 @@ const modificarTarea = async (req, res) => {
 const finalizarTarea = async (req, res) => {
     try {
         const { id } = req.params;
-        const { id_tarea } = req.body;
+        const { id_tarea, id_empleado } = req.body;
 
         // if (id === undefined || descripcion === undefined || nombre === undefined) {
         //     res.status(400).json({ message: "Bad Request. Please fill all field." });
         // }
 
-        const tarea = {id_tarea };
+        const tarea = {id_tarea, id_empleado };
         const connection = await getConnection();
-        const result = await connection.query(`CALL SP_finalizar_tarea(?, ?)`, [id, tarea.id_tarea]);
+        const result = await connection.query(`CALL SP_finalizar_tarea(?, ?, ?)`, [id, tarea.id_tarea, tarea.id_empleado]);
         res.json(result);
     } catch (error) {
         res.status(500);

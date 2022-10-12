@@ -4,7 +4,7 @@ const obtenerEmpleados = async (req, res) => {
     try {
         const connection = await getConnection();
         const result = await connection.query(`CALL SP_listar_todos_empleados()`);
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -16,7 +16,7 @@ const obtenerEmpleado = async (req, res) => {
         const { id } = req.params;
         const connection = await getConnection();
         const result = await connection.query(`CALL SP_listar_un_empleado(?)`, id);
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -37,7 +37,7 @@ const crearEmpleado = async (req, res) => {
 
         const empleado = { rut, nombres, apellidos, correo_electronico, usuario, contrasena, activo, cargo_empleado, id_empresa, id_unida };
         const connection = await getConnection();
-        const result = await connection.query( `CALL Control_tareas.SP_crear_empleado(?,?,?,?,?,?,?,?,?,?)`, [ empleado.rut, empleado.nombres, empleado.apellidos, empleado.correo_electronico, empleado.usuario, empleado.contrasena, empleado.activo, empleado.cargo_empleado, empleado.id_empresa, empleado.id_unida]);
+        const result = await connection.query(`CALL SP_crear_empleado(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [empleado.rut, empleado.nombres, empleado.apellidos, empleado.correo_electronico, empleado.usuario, empleado.contrasena, empleado.activo, empleado.cargo_empleado, empleado.id_empresa, empleado.id_unida]);
         res.json({ message: "Empleado agregado" });
     } catch (error) {
         res.status(500);
