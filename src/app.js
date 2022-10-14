@@ -5,6 +5,7 @@ import controltareasRoutes from "./routes/controltareas.routes";
 import empleadosRoutes from "./routes/empleado.routes";
 import empresasRoutes from "./routes/empresa.routes";
 import unidadesinternasRoutes from "./routes/unidadinterna.routes";
+import authRoutes from "./routes/auth.routes";
 
 const app=express();
 
@@ -20,5 +21,6 @@ app.use("/api/tareas", controltareasRoutes);
 app.use("/api/empleados", empleadosRoutes);
 app.use("/api/empresas", empresasRoutes);
 app.use("/api/unidades", unidadesinternasRoutes);
+app.use("/api/auth", authRoutes);
 
 export default app;

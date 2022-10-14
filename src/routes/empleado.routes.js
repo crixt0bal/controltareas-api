@@ -7,7 +7,6 @@ const router = Router();
 //Empleado
 router.get("/", empleadoController.obtenerEmpleados);
 router.get("/:id", empleadoController.obtenerEmpleado);
-router.get("/login", empleadoController.login);
 router.post("/", validateCreateAndUpdateEmpleado, empleadoController.crearEmpleado);
 
 
