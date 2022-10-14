@@ -25,7 +25,7 @@ const obtenerEmpresas = async (req, res) => {
     try {
         const connection = await getConnection();
         const result = await connection.query(`CALL SP_listar_empresas()`);
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
         res.send(error.message);
